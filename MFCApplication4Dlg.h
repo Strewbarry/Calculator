@@ -1,9 +1,9 @@
 
 // MFCApplication4Dlg.h : 헤더 파일
 //
-
 #pragma once
 
+#include "ScienCalDlg.h"
 
 // CMFCApplication4Dlg 대화 상자
 class CMFCApplication4Dlg : public CDialogEx
@@ -56,4 +56,7 @@ public:
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	CString m_EditB;
+	afx_msg void On32772();
+	CScienCalDlg dlg;
+private:
 };

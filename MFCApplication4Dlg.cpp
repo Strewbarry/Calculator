@@ -5,6 +5,7 @@
 #include "stdafx.h"
 #include "MFCApplication4.h"
 #include "MFCApplication4Dlg.h"
+#include "ScienCalDlg.h"
 #include "afxdialogex.h"
 #include <iostream>
 
@@ -96,6 +97,7 @@ BEGIN_MESSAGE_MAP(CMFCApplication4Dlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON3, &CMFCApplication4Dlg::OnBnClickedButton3)
 	ON_BN_CLICKED(IDC_BUTT_CALC, &CMFCApplication4Dlg::OnBnClickedButtCalc)
 	ON_WM_KEYDOWN()
+	ON_COMMAND(ID_32772, &CMFCApplication4Dlg::On32772)
 END_MESSAGE_MAP()
 
 
@@ -294,13 +296,9 @@ CString Calculation(CString a, CString b, CString si) {
 	res.Format(_T("%d"), result);
 	return res;
 }
-
-
 void CMFCApplication4Dlg::OnBnClickedButtPlus()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-
-	// 플러스부터 기능구현 시작할것 0~9 는 int 값으로 m_O저장되어있음
 	UpdateData(true);
 	if (nSign == "")
 		nSign = '+';
@@ -319,8 +317,6 @@ void CMFCApplication4Dlg::OnBnClickedButtPlus()
 	aFlag = 0;
 	UpdateData(false);
 }
-
-
 void CMFCApplication4Dlg::OnBnClickedButtMinus()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -342,8 +338,6 @@ void CMFCApplication4Dlg::OnBnClickedButtMinus()
 	aFlag = 0;
 	UpdateData(false);
 }
-
-
 void CMFCApplication4Dlg::OnBnClickedButtMulti()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -365,8 +359,6 @@ void CMFCApplication4Dlg::OnBnClickedButtMulti()
 	aFlag = 0;
 	UpdateData(false);
 }
-
-
 void CMFCApplication4Dlg::OnBnClickedButtDivde()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -394,7 +386,6 @@ void CMFCApplication4Dlg::OnBnClickedButtDivde()
 	UpdateData(false);
 }
 
-
 void CMFCApplication4Dlg::OnBnClickedButton3()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -418,11 +409,6 @@ void CMFCApplication4Dlg::OnBnClickedButtCalc()
 				m_EditPre = m_EditPre + m_EditA + '=';
 				m_EditA = Calculation(m_EditPre, m_EditA, nSign);
 				m_Output = 0;
-
-				debugMsg.Format(_T("m_EditPre : %s\n"), m_EditPre);
-				OutputDebugString(debugMsg);
-				debugMsg.Format(_T("m_EditA : %s\n"), m_EditA);
-				OutputDebugString(debugMsg);
 				aFlag = 1;
 			}
 			else {
@@ -507,4 +493,15 @@ BOOL CMFCApplication4Dlg::PreTranslateMessage(MSG* pMsg)
 		return TRUE;
 	}
 	return CDialogEx::PreTranslateMessage(pMsg);
+}
+
+
+void CMFCApplication4Dlg::On32772()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	dlg.Create(IDD_DIALOG_SCIENTIFIC, this);
+	dlg.ShowWindow(SW_SHOW);
+	//ShowWindow(SW_HIDE);
+
+	//this->EndDialog(IDOK);
 }
