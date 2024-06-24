@@ -413,6 +413,8 @@ void CMFCApplication4Dlg::OnBnClickedButtCalc()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(true);
+	if (m_EditA == "")
+		MessageBox(_T("숫자를 입력해주세요"), _T("alert"), NULL);
 	if (m_EditA == '0') {
 		MessageBox(_T("0으로 나눌수 없습니다"), _T("alert"), NULL);
 	}
@@ -420,8 +422,8 @@ void CMFCApplication4Dlg::OnBnClickedButtCalc()
 		m_EditPre = m_EditPre + m_EditA + '=';
 		m_EditA = Calculation(m_EditPre, m_EditA, nSign);
 		m_Output = 0;
+		UpdateData(false);
 	}
-	UpdateData(false);
 }
 
 
@@ -429,6 +431,67 @@ void CMFCApplication4Dlg::OnBnClickedButtCalc()
 void CMFCApplication4Dlg::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+	switch (nChar)
+	{
+	case VK_NUMPAD0:
+		OnBnClickedButt0();
+		break;
+	case VK_NUMPAD1:
+		OnBnClickedButt1();
+		break;
+	case VK_NUMPAD2:
+		OnBnClickedButt2();
+		break;
+	case VK_NUMPAD3:
+		OnBnClickedButt3();
+		break;
+	case VK_NUMPAD4:
+		OnBnClickedButt4();
+		break;
+	case VK_NUMPAD5:
+		OnBnClickedButt5();
+		break;
+	case VK_NUMPAD6:
+		OnBnClickedButt6();
+		break;
+	case VK_NUMPAD7:
+		OnBnClickedButt7();
+		break;
+	case VK_NUMPAD8:
+		OnBnClickedButt8();
+		break;
+	case VK_NUMPAD9:
+		OnBnClickedButt9();
+		break;
+	case VK_ADD:
+		OnBnClickedButtPlus();
+		break;
+	case VK_SUBTRACT:
+		OnBnClickedButtMinus();
+		break;
+	case VK_MULTIPLY:
+		OnBnClickedButtMulti();
+		break;
+	case VK_DIVIDE:
+		OnBnClickedButtDivde();
+		break;
+	case VK_RETURN:
+		OnBnClickedButtCalc();
+	default:
+		break;
+	}
 
 	CDialogEx::OnKeyDown(nChar, nRepCnt, nFlags);
+}
+
+
+BOOL CMFCApplication4Dlg::PreTranslateMessage(MSG* pMsg)
+{
+	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
+	if (pMsg->message == WM_KEYDOWN)
+	{
+		OnKeyDown((UINT)pMsg->wParam, 1, (UINT)pMsg->lParam);
+		return TRUE;
+	}
+	return CDialogEx::PreTranslateMessage(pMsg);
 }
