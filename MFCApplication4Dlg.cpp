@@ -15,6 +15,8 @@
 CString OutValue[100];
 int nCount = 0;
 CString nSign;
+CString debugMsg;
+int aFlag = 0;
 
 // 응용 프로그램 정보에 사용되는 CAboutDlg 대화 상자입니다.
 
@@ -61,6 +63,7 @@ CMFCApplication4Dlg::CMFCApplication4Dlg(CWnd* pParent /*=NULL*/)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 	m_Output = 0;
+	m_EditB = _T("");
 }
 
 void CMFCApplication4Dlg::DoDataExchange(CDataExchange* pDX)
@@ -182,7 +185,6 @@ HCURSOR CMFCApplication4Dlg::OnQueryDragIcon()
 }
 
 
-
 void CMFCApplication4Dlg::OnBnClickedButt1()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -191,8 +193,6 @@ void CMFCApplication4Dlg::OnBnClickedButt1()
 	m_EditA = m_IntToStr;
 	UpdateData(false);
 }
-
-
 void CMFCApplication4Dlg::OnBnClickedButt2()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -201,8 +201,6 @@ void CMFCApplication4Dlg::OnBnClickedButt2()
 	m_EditA = m_IntToStr;
 	UpdateData(false);
 }
-
-
 void CMFCApplication4Dlg::OnBnClickedButt3()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -211,8 +209,6 @@ void CMFCApplication4Dlg::OnBnClickedButt3()
 	m_EditA = m_IntToStr;
 	UpdateData(false);
 }
-
-
 void CMFCApplication4Dlg::OnBnClickedButt4()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -221,8 +217,6 @@ void CMFCApplication4Dlg::OnBnClickedButt4()
 	m_EditA = m_IntToStr;
 	UpdateData(false);
 }
-
-
 void CMFCApplication4Dlg::OnBnClickedButt5()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -231,8 +225,6 @@ void CMFCApplication4Dlg::OnBnClickedButt5()
 	m_EditA = m_IntToStr;
 	UpdateData(false);
 }
-
-
 void CMFCApplication4Dlg::OnBnClickedButt6()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -241,8 +233,6 @@ void CMFCApplication4Dlg::OnBnClickedButt6()
 	m_EditA = m_IntToStr;
 	UpdateData(false);
 }
-
-
 void CMFCApplication4Dlg::OnBnClickedButt7()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -251,9 +241,6 @@ void CMFCApplication4Dlg::OnBnClickedButt7()
 	m_EditA = m_IntToStr;
 	UpdateData(false);
 }
-
-
-
 void CMFCApplication4Dlg::OnBnClickedButt8()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -262,9 +249,6 @@ void CMFCApplication4Dlg::OnBnClickedButt8()
 	m_EditA = m_IntToStr;
 	UpdateData(false);
 }
-
-
-
 void CMFCApplication4Dlg::OnBnClickedButt9()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -273,9 +257,6 @@ void CMFCApplication4Dlg::OnBnClickedButt9()
 	m_EditA = m_IntToStr;
 	UpdateData(false);
 }
-
-
-
 void CMFCApplication4Dlg::OnBnClickedButt0()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -285,7 +266,6 @@ void CMFCApplication4Dlg::OnBnClickedButt0()
 	UpdateData(false);
 }
 
-
 void CMFCApplication4Dlg::OnBnClickedButtClear()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -293,6 +273,7 @@ void CMFCApplication4Dlg::OnBnClickedButtClear()
 	m_EditPre = "";
 	m_Output = 0;
 	UpdateData(false);
+	aFlag = 0;
 }
 
 CString Calculation(CString a, CString b, CString si) {
@@ -323,9 +304,11 @@ void CMFCApplication4Dlg::OnBnClickedButtPlus()
 	UpdateData(true);
 	if (nSign == "")
 		nSign = '+';
-	if (m_EditPre == "") {
+	if (m_EditPre == "" || aFlag == 1) {
 		m_EditPre = m_EditA + nSign;
 		nSign = '+';
+		if (aFlag == 1)
+			m_EditPre = m_EditA + nSign;
 	}
 	else {
 		m_EditPre = Calculation(m_EditPre, m_EditA, nSign) + '+';
@@ -333,6 +316,7 @@ void CMFCApplication4Dlg::OnBnClickedButtPlus()
 	}
 	m_EditA = "";
 	m_Output = 0;
+	aFlag = 0;
 	UpdateData(false);
 }
 
@@ -343,9 +327,11 @@ void CMFCApplication4Dlg::OnBnClickedButtMinus()
 	UpdateData(true);
 	if (nSign == "")
 		nSign = '-';
-	if (m_EditPre == "") {
+	if (m_EditPre == "" || aFlag == 1) {
 		m_EditPre = m_EditA + nSign;
 		nSign = '-';
+		if (aFlag == 1)
+			m_EditPre = m_EditA + nSign;
 	}
 	else {
 		m_EditPre = Calculation(m_EditPre, m_EditA, nSign) + '-';
@@ -353,6 +339,7 @@ void CMFCApplication4Dlg::OnBnClickedButtMinus()
 	}
 	m_EditA = "";
 	m_Output = 0;
+	aFlag = 0;
 	UpdateData(false);
 }
 
@@ -363,9 +350,11 @@ void CMFCApplication4Dlg::OnBnClickedButtMulti()
 	UpdateData(true);
 	if (nSign == "")
 		nSign = '*';
-	if (m_EditPre == "") {
+	if (m_EditPre == "" || aFlag == 1) {
 		m_EditPre = m_EditA + nSign;
 		nSign = '*';
+		if (aFlag == 1)
+			m_EditPre = m_EditA + nSign;
 	}
 	else {
 		m_EditPre = Calculation(m_EditPre, m_EditA, nSign) + '*';
@@ -373,6 +362,7 @@ void CMFCApplication4Dlg::OnBnClickedButtMulti()
 	}
 	m_EditA = "";
 	m_Output = 0;
+	aFlag = 0;
 	UpdateData(false);
 }
 
@@ -387,9 +377,11 @@ void CMFCApplication4Dlg::OnBnClickedButtDivde()
 		MessageBox(_T("0으로 나눌수 없습니다"), _T("alert"), NULL);
 	}
 	else {
-		if (m_EditPre == "") {
+		if (m_EditPre == "" || aFlag == 1) {
 			m_EditPre = m_EditA + nSign;
 			nSign = '/';
+			if(aFlag==1)
+				m_EditPre = m_EditA + nSign;
 		}
 		else {
 			m_EditPre = Calculation(m_EditPre, m_EditA, nSign) + '/';
@@ -398,6 +390,7 @@ void CMFCApplication4Dlg::OnBnClickedButtDivde()
 	}
 	m_EditA = "";
 	m_Output = 0;
+	aFlag = 0;
 	UpdateData(false);
 }
 
@@ -415,13 +408,29 @@ void CMFCApplication4Dlg::OnBnClickedButtCalc()
 	UpdateData(true);
 	if (m_EditA == "")
 		MessageBox(_T("숫자를 입력해주세요"), _T("alert"), NULL);
-	if (m_EditA == '0') {
-		MessageBox(_T("0으로 나눌수 없습니다"), _T("alert"), NULL);
-	}
 	else {
-		m_EditPre = m_EditPre + m_EditA + '=';
-		m_EditA = Calculation(m_EditPre, m_EditA, nSign);
-		m_Output = 0;
+		if (m_EditA == '0' && nSign == '/') {
+			MessageBox(_T("0으로 나눌수 없습니다"), _T("alert"), NULL);
+		}
+		else {
+			if (aFlag == 0) {
+				m_EditB = m_EditA;
+				m_EditPre = m_EditPre + m_EditA + '=';
+				m_EditA = Calculation(m_EditPre, m_EditA, nSign);
+				m_Output = 0;
+
+				debugMsg.Format(_T("m_EditPre : %s\n"), m_EditPre);
+				OutputDebugString(debugMsg);
+				debugMsg.Format(_T("m_EditA : %s\n"), m_EditA);
+				OutputDebugString(debugMsg);
+				aFlag = 1;
+			}
+			else {
+				m_EditPre = m_EditA + nSign + m_EditB + '=';
+				m_EditA = Calculation(m_EditA, m_EditB, nSign);
+				m_Output = 0;
+			}
+		}
 		UpdateData(false);
 	}
 }
@@ -477,6 +486,10 @@ void CMFCApplication4Dlg::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		break;
 	case VK_RETURN:
 		OnBnClickedButtCalc();
+		break;
+	case VK_DELETE:
+		OnBnClickedButtClear();
+		break;
 	default:
 		break;
 	}
