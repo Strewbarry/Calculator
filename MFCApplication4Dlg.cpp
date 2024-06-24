@@ -6,11 +6,15 @@
 #include "MFCApplication4.h"
 #include "MFCApplication4Dlg.h"
 #include "afxdialogex.h"
+#include <iostream>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
+CString OutValue[100];
+int nCount = 0;
+CString nSign;
 
 // 응용 프로그램 정보에 사용되는 CAboutDlg 대화 상자입니다.
 
@@ -51,19 +55,44 @@ END_MESSAGE_MAP()
 
 CMFCApplication4Dlg::CMFCApplication4Dlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_MFCAPPLICATION4_DIALOG, pParent)
+	, m_EditA(_T(""))
+	, m_IntToStr(_T(""))
+	, m_EditPre(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	m_Output = 0;
 }
 
 void CMFCApplication4Dlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	//  DDX_Text(pDX, IDC_EDIT1, m_EditNum);
+	DDX_Text(pDX, IDC_EDIT1, m_EditA);
+	DDX_Text(pDX, IDC_EDIT2, m_EditPre);
 }
 
 BEGIN_MESSAGE_MAP(CMFCApplication4Dlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDC_BUTT_1, &CMFCApplication4Dlg::OnBnClickedButt1)
+	ON_BN_CLICKED(IDC_BUTT_2, &CMFCApplication4Dlg::OnBnClickedButt2)
+	ON_BN_CLICKED(IDC_BUTT_3, &CMFCApplication4Dlg::OnBnClickedButt3)
+	ON_BN_CLICKED(IDC_BUTT_4, &CMFCApplication4Dlg::OnBnClickedButt4)
+	ON_BN_CLICKED(IDC_BUTT_5, &CMFCApplication4Dlg::OnBnClickedButt5)
+	ON_BN_CLICKED(IDC_BUTT_6, &CMFCApplication4Dlg::OnBnClickedButt6)
+	ON_BN_CLICKED(IDC_BUTT_7, &CMFCApplication4Dlg::OnBnClickedButt7)
+	ON_BN_CLICKED(IDC_BUTT_8, &CMFCApplication4Dlg::OnBnClickedButt8)
+	ON_BN_CLICKED(IDC_BUTT_9, &CMFCApplication4Dlg::OnBnClickedButt9)
+	ON_BN_CLICKED(IDC_BUTT_0, &CMFCApplication4Dlg::OnBnClickedButt0)
+	ON_BN_CLICKED(IDC_BUTT_CLEAR, &CMFCApplication4Dlg::OnBnClickedButtClear)
+	ON_BN_CLICKED(IDC_BUTT_PLUS, &CMFCApplication4Dlg::OnBnClickedButtPlus)
+	ON_BN_CLICKED(IDC_BUTT_MINUS, &CMFCApplication4Dlg::OnBnClickedButtMinus)
+	ON_BN_CLICKED(IDC_BUTT_MULTI, &CMFCApplication4Dlg::OnBnClickedButtMulti)
+	ON_BN_CLICKED(IDC_BUTT_DIVDE, &CMFCApplication4Dlg::OnBnClickedButtDivde)
+	ON_BN_CLICKED(IDC_BUTTON3, &CMFCApplication4Dlg::OnBnClickedButton3)
+	ON_BN_CLICKED(IDC_BUTT_CALC, &CMFCApplication4Dlg::OnBnClickedButtCalc)
+	ON_WM_KEYDOWN()
 END_MESSAGE_MAP()
 
 
@@ -152,3 +181,254 @@ HCURSOR CMFCApplication4Dlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void CMFCApplication4Dlg::OnBnClickedButt1()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	m_Output = m_Output * 10 + 1;
+	m_IntToStr.Format(_T("%d"), m_Output);
+	m_EditA = m_IntToStr;
+	UpdateData(false);
+}
+
+
+void CMFCApplication4Dlg::OnBnClickedButt2()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	m_Output = m_Output * 10 + 2;
+	m_IntToStr.Format(_T("%d"), m_Output);
+	m_EditA = m_IntToStr;
+	UpdateData(false);
+}
+
+
+void CMFCApplication4Dlg::OnBnClickedButt3()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	m_Output = m_Output * 10 + 3;
+	m_IntToStr.Format(_T("%d"), m_Output);
+	m_EditA = m_IntToStr;
+	UpdateData(false);
+}
+
+
+void CMFCApplication4Dlg::OnBnClickedButt4()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	m_Output = m_Output * 10 + 4;
+	m_IntToStr.Format(_T("%d"), m_Output);
+	m_EditA = m_IntToStr;
+	UpdateData(false);
+}
+
+
+void CMFCApplication4Dlg::OnBnClickedButt5()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	m_Output = m_Output * 10 + 5;
+	m_IntToStr.Format(_T("%d"), m_Output);
+	m_EditA = m_IntToStr;
+	UpdateData(false);
+}
+
+
+void CMFCApplication4Dlg::OnBnClickedButt6()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	m_Output = m_Output * 10 + 6;
+	m_IntToStr.Format(_T("%d"), m_Output);
+	m_EditA = m_IntToStr;
+	UpdateData(false);
+}
+
+
+void CMFCApplication4Dlg::OnBnClickedButt7()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	m_Output = m_Output * 10 + 7;
+	m_IntToStr.Format(_T("%d"), m_Output);
+	m_EditA = m_IntToStr;
+	UpdateData(false);
+}
+
+
+
+void CMFCApplication4Dlg::OnBnClickedButt8()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	m_Output = m_Output * 10 + 8;
+	m_IntToStr.Format(_T("%d"), m_Output);
+	m_EditA = m_IntToStr;
+	UpdateData(false);
+}
+
+
+
+void CMFCApplication4Dlg::OnBnClickedButt9()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	m_Output = m_Output * 10 + 9;
+	m_IntToStr.Format(_T("%d"), m_Output);
+	m_EditA = m_IntToStr;
+	UpdateData(false);
+}
+
+
+
+void CMFCApplication4Dlg::OnBnClickedButt0()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	m_Output = m_Output * 10 + 0;
+	m_IntToStr.Format(_T("%d"), m_Output);
+	m_EditA = m_IntToStr;
+	UpdateData(false);
+}
+
+
+void CMFCApplication4Dlg::OnBnClickedButtClear()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	m_EditA = "";
+	m_EditPre = "";
+	m_Output = 0;
+	UpdateData(false);
+}
+
+CString Calculation(CString a, CString b, CString si) {
+	int aa = _ttoi(a);
+	int bb = _ttoi(b);
+	int result = 0;
+
+	if(si==43)
+		result = aa + bb;
+	else if(si==45)
+		result = aa - bb;
+	else if(si==42)
+		result = aa*bb;
+	else if(si==47)
+		result = aa/bb;
+
+	CString res;
+	res.Format(_T("%d"), result);
+	return res;
+}
+
+
+void CMFCApplication4Dlg::OnBnClickedButtPlus()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+
+	// 플러스부터 기능구현 시작할것 0~9 는 int 값으로 m_O저장되어있음
+	UpdateData(true);
+	if (nSign == "")
+		nSign = '+';
+	if (m_EditPre == "") {
+		m_EditPre = m_EditA + nSign;
+		nSign = '+';
+	}
+	else {
+		m_EditPre = Calculation(m_EditPre, m_EditA, nSign) + '+';
+		nSign = '+';
+	}
+	m_EditA = "";
+	m_Output = 0;
+	UpdateData(false);
+}
+
+
+void CMFCApplication4Dlg::OnBnClickedButtMinus()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(true);
+	if (nSign == "")
+		nSign = '-';
+	if (m_EditPre == "") {
+		m_EditPre = m_EditA + nSign;
+		nSign = '-';
+	}
+	else {
+		m_EditPre = Calculation(m_EditPre, m_EditA, nSign) + '-';
+		nSign = '-';
+	}
+	m_EditA = "";
+	m_Output = 0;
+	UpdateData(false);
+}
+
+
+void CMFCApplication4Dlg::OnBnClickedButtMulti()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(true);
+	if (nSign == "")
+		nSign = '*';
+	if (m_EditPre == "") {
+		m_EditPre = m_EditA + nSign;
+		nSign = '*';
+	}
+	else {
+		m_EditPre = Calculation(m_EditPre, m_EditA, nSign) + '*';
+		nSign = '*';
+	}
+	m_EditA = "";
+	m_Output = 0;
+	UpdateData(false);
+}
+
+
+void CMFCApplication4Dlg::OnBnClickedButtDivde()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(true);
+	if(nSign=="")
+		nSign = '/';
+	if (m_EditA == '0') {
+		MessageBox(_T("0으로 나눌수 없습니다"), _T("alert"), NULL);
+	}
+	else {
+		if (m_EditPre == "") {
+			m_EditPre = m_EditA + nSign;
+			nSign = '/';
+		}
+		else {
+			m_EditPre = Calculation(m_EditPre, m_EditA, nSign) + '/';
+			nSign = '/';
+		}
+	}
+	m_EditA = "";
+	m_Output = 0;
+	UpdateData(false);
+}
+
+
+void CMFCApplication4Dlg::OnBnClickedButton3()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+
+}
+
+
+void CMFCApplication4Dlg::OnBnClickedButtCalc()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(true);
+	if (m_EditA == '0') {
+		MessageBox(_T("0으로 나눌수 없습니다"), _T("alert"), NULL);
+	}
+	else {
+		m_EditPre = m_EditPre + m_EditA + '=';
+		m_EditA = Calculation(m_EditPre, m_EditA, nSign);
+		m_Output = 0;
+	}
+	UpdateData(false);
+}
+
+
+
+void CMFCApplication4Dlg::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+
+	CDialogEx::OnKeyDown(nChar, nRepCnt, nFlags);
+}
