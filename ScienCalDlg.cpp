@@ -652,4 +652,19 @@ void CScienCalDlg::OnBnClickedButtClearall()
 void CScienCalDlg::OnDblclkList1()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	int index = m_ListCtrl.GetCurSel();
+	CString str;
+	m_ListCtrl.GetText(index, str);
+
+	int point = str.Find('=');
+	AfxExtractSubString(m_EditPre, str, 0, '=');
+	AfxExtractSubString(m_EditA, str, 1, '=');
+
+	debugMsg2.Format(_T("m_EditPre : %s\n"), m_EditPre);
+	OutputDebugString(debugMsg2);
+	debugMsg2.Format(_T("m_EditA : %s\n"), m_EditA);
+	OutputDebugString(debugMsg2);
+
+	UpdateData(false);
+
 }
