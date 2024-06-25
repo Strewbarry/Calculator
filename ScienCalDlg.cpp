@@ -23,6 +23,8 @@ CScienCalDlg::CScienCalDlg(CWnd* pParent /*=NULL*/)
 	, nSign(_T(""))
 	, m_EditB(_T(""))
 	, squareFlag(false)
+	, m_ListBox(_T(""))
+	, historyShow(false)
 {
 
 }
@@ -37,6 +39,8 @@ void CScienCalDlg::DoDataExchange(CDataExchange* pDX)
 
 	DDX_Text(pDX, IDC_EDIT1, m_EditPre);
 	DDX_Text(pDX, IDC_EDIT2, m_EditA);
+	DDX_Control(pDX, IDC_LIST1, m_ListCtrl);
+	DDX_LBString(pDX, IDC_LIST1, m_ListBox);
 }
 
 
@@ -61,6 +65,8 @@ BEGIN_MESSAGE_MAP(CScienCalDlg, CDialog)
 	ON_WM_KEYDOWN()
 	ON_BN_CLICKED(IDC_BUTT_POW, &CScienCalDlg::OnBnClickedButtPow)
 	ON_BN_CLICKED(IDC_BUTT_SQRT, &CScienCalDlg::OnBnClickedButtSqrt)
+	ON_COMMAND(ID_32771, &CScienCalDlg::On32771)
+	ON_COMMAND(ID_32772, &CScienCalDlg::On32772)
 END_MESSAGE_MAP()
 
 
@@ -568,4 +574,34 @@ void CScienCalDlg::OnBnClickedButtSqrt()
 	aFlag = 0;
 	pointFlag = 0;
 	UpdateData(false);
+}
+
+
+void CScienCalDlg::On32771()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CMenu* pMenu = GetMenu();
+	if (pMenu != nullptr) {
+		CMenu* pSubMenu = pMenu->GetSubMenu(0);
+		if (pSubMenu != nullptr) {
+			if (historyShow == 0) {
+				m_ListCtrl.ShowWindow(SW_SHOW);
+				historyShow = 1;
+				pSubMenu->ModifyMenu(ID_32771, MF_BYCOMMAND | MF_STRING, ID_32771, _T("왜안대"));
+			}
+			else {
+				m_ListCtrl.ShowWindow(SW_HIDE);
+				historyShow = 0;
+				pSubMenu->ModifyMenu(ID_32771, MF_BYCOMMAND | MF_STRING, ID_32771, _T("히스토리 숨기기"));
+			}
+			DrawMenuBar();
+		}
+	}
+}
+
+
+void CScienCalDlg::On32772()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	OnOK();
 }

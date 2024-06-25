@@ -58,5 +58,6 @@ public:
 	CString m_EditB;
 	afx_msg void On32772();
 	CScienCalDlg dlg;
+	
 private:
 };

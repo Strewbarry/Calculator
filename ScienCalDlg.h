@@ -2,6 +2,7 @@
 
 // CScienCalDlg 대화 상자입니다.
 #include "MFCApplication4.h"
+#include "afxwin.h"
 
 
 class CScienCalDlg : public CDialog
@@ -54,4 +55,9 @@ public:
 	afx_msg void OnBnClickedButtPow();
 	bool squareFlag;
 	afx_msg void OnBnClickedButtSqrt();
+	afx_msg void On32771();
+	CListBox m_ListCtrl;
+	CString m_ListBox;
+	bool historyShow;
+	afx_msg void On32772();
 };
