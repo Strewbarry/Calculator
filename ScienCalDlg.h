@@ -60,4 +60,7 @@ public:
 	CString m_ListBox;
 	bool historyShow;
 	afx_msg void On32772();
+	CString m_EditBuff;
+	afx_msg void OnBnClickedButtClearall();
+	afx_msg void OnDblclkList1();
 };
