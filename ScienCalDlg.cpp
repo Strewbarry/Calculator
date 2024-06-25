@@ -22,6 +22,7 @@ CScienCalDlg::CScienCalDlg(CWnd* pParent /*=NULL*/)
 	, m_Output2(0)
 	, nSign(_T(""))
 	, m_EditB(_T(""))
+	, squareFlag(false)
 {
 
 }
@@ -57,6 +58,9 @@ BEGIN_MESSAGE_MAP(CScienCalDlg, CDialog)
 	ON_BN_CLICKED(IDC_BUTT_DIVIDE, &CScienCalDlg::OnBnClickedButtDivide)
 	ON_BN_CLICKED(IDC_BUTT_CALC, &CScienCalDlg::OnBnClickedButtCalc)
 	ON_BN_CLICKED(IDC_BUTT_DOT, &CScienCalDlg::OnBnClickedButtDot)
+	ON_WM_KEYDOWN()
+	ON_BN_CLICKED(IDC_BUTT_POW, &CScienCalDlg::OnBnClickedButtPow)
+	ON_BN_CLICKED(IDC_BUTT_SQRT, &CScienCalDlg::OnBnClickedButtSqrt)
 END_MESSAGE_MAP()
 
 
@@ -76,6 +80,9 @@ void CScienCalDlg::OnBnClickedButt0()
 		m_EditA = m_IntToStr;
 		UpdateData(false);
 	}
+	CString debugMsg;
+	debugMsg.Format(_T("m_EditA : %s\n"), m_EditA);
+	OutputDebugString(debugMsg);
 }
 
 
@@ -258,14 +265,20 @@ CString Calculation2(CString a, CString b, CString si) {
 	double bb = _ttof(b);
 	double result = 0;
 
-	if (si == 43)
+	if (si[0] == 43)
 		result = aa + bb;
-	else if (si == 45)
+	else if (si[0] == 45)
 		result = aa - bb;
-	else if (si == 42)
+	else if (si[0] == 42)
 		result = aa * bb;
-	else if (si == 47)
+	else if (si[0] == 47)
 		result = aa / bb;
+	else if (si[0] == 94) {  // 94 == ^
+		result = aa * aa;
+	}
+	else if (si[0] == 's') {
+		result = sqrt(aa);
+	}
 
 	CString res;
 	res.Format(_T("%.2f"), result);
@@ -293,6 +306,7 @@ void CScienCalDlg::OnBnClickedButtPlus()
 	m_Output2 = 0;
 	aFlag = 0;
 	pointFlag = 0;
+	squareFlag = 0;
 	UpdateData(false);
 }
 
@@ -318,6 +332,7 @@ void CScienCalDlg::OnBnClickedButtMinus()
 	m_Output2 = 0;
 	aFlag = 0;
 	pointFlag = 0;
+	squareFlag = 0;
 	UpdateData(false);
 }
 
@@ -343,6 +358,7 @@ void CScienCalDlg::OnBnClickedButtMulti()
 	m_Output2 = 0;
 	aFlag = 0;
 	pointFlag = 0;
+	squareFlag = 0;
 	UpdateData(false);
 }
 
@@ -353,7 +369,7 @@ void CScienCalDlg::OnBnClickedButtDivide()
 	UpdateData(true);
 	if (nSign == "")
 		nSign = '/';
-	if (m_EditA == '0') {
+	if (m_EditA == "0.00") {
 		MessageBox(_T("0으로 나눌수 없습니다"), _T("alert"), NULL);
 	}
 	else {
@@ -373,6 +389,7 @@ void CScienCalDlg::OnBnClickedButtDivide()
 	m_Output2 = 0;
 	aFlag = 0;
 	pointFlag = 0;
+	squareFlag = 0;
 	UpdateData(false);
 }
 
@@ -381,10 +398,23 @@ void CScienCalDlg::OnBnClickedButtCalc()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(true);
-	if (m_EditA == "")
+	if (m_EditA == "" && squareFlag == 0)
 		MessageBox(_T("숫자를 입력해주세요"), _T("alert"), NULL);
+	else if (squareFlag == 1) {
+		if (aFlag == 0) {
+			m_EditB = m_EditA;
+			m_EditPre = m_EditPre + '=';
+			m_EditA = Calculation2(m_EditPre, m_EditA, nSign);
+			aFlag = 1;
+		}
+		else {
+			m_EditPre = m_EditA + nSign + '=';
+			m_EditA = Calculation2(m_EditPre, m_EditA, nSign);
+		}
+			m_Output = 0;
+	}
 	else {
-		if (m_EditA == '0' && nSign == '/') {
+		if (m_EditA == "0.00" && nSign == '/') {
 			MessageBox(_T("0으로 나눌수 없습니다"), _T("alert"), NULL);
 		}
 		else {
@@ -392,18 +422,17 @@ void CScienCalDlg::OnBnClickedButtCalc()
 				m_EditB = m_EditA;
 				m_EditPre = m_EditPre + m_EditA + '=';
 				m_EditA = Calculation2(m_EditPre, m_EditA, nSign);
-				m_Output = 0;
 				aFlag = 1;
 			}
 			else {
 				m_EditPre = m_EditA + nSign + m_EditB + '=';
 				m_EditA = Calculation2(m_EditA, m_EditB, nSign);
-				m_Output = 0;
 			}
+			m_Output = 0;
 			pointFlag = 0;
 		}
-		UpdateData(false);
 	}
+	UpdateData(false);
 }
 
 
@@ -411,4 +440,132 @@ void CScienCalDlg::OnBnClickedButtDot()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	pointFlag = 1;
+}
+
+
+BOOL CScienCalDlg::PreTranslateMessage(MSG* pMsg)
+{
+	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
+	if (pMsg->message == WM_KEYDOWN)
+	{
+		OnKeyDown((UINT)pMsg->wParam, 1, (UINT)pMsg->lParam);
+		return TRUE;
+	}
+	return CDialog::PreTranslateMessage(pMsg);
+}
+
+
+void CScienCalDlg::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+	switch (nChar)
+	{
+	case VK_NUMPAD0:
+		OnBnClickedButt0();
+		break;
+	case VK_NUMPAD1:
+		OnBnClickedButt1();
+		break;
+	case VK_NUMPAD2:
+		OnBnClickedButt2();
+		break;
+	case VK_NUMPAD3:
+		OnBnClickedButt3();
+		break;
+	case VK_NUMPAD4:
+		OnBnClickedButt4();
+		break;
+	case VK_NUMPAD5:
+		OnBnClickedButt5();
+		break;
+	case VK_NUMPAD6:
+		OnBnClickedButt6();
+		break;
+	case VK_NUMPAD7:
+		OnBnClickedButt7();
+		break;
+	case VK_NUMPAD8:
+		OnBnClickedButt8();
+		break;
+	case VK_NUMPAD9:
+		OnBnClickedButt9();
+		break;
+	case VK_ADD:
+		OnBnClickedButtPlus();
+		break;
+	case VK_SUBTRACT:
+		OnBnClickedButtMinus();
+		break;
+	case VK_MULTIPLY:
+		OnBnClickedButtMulti();
+		break;
+	case VK_DIVIDE:
+		OnBnClickedButtDivide();
+		break;
+	case VK_RETURN:
+		OnBnClickedButtCalc();
+		break;
+	case VK_DELETE:
+		OnBnClickedButtClear();
+		break;
+	case VK_DECIMAL:
+		OnBnClickedButtDot();
+		break;
+	default:
+		break;
+	}
+
+	CDialog::OnKeyDown(nChar, nRepCnt, nFlags);
+}
+
+
+void CScienCalDlg::OnBnClickedButtPow()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(true);
+	if (nSign == "")
+		nSign = "^";
+	if (m_EditPre == "" || aFlag == 1) {
+		m_EditPre = m_EditA + nSign;
+		nSign = "^";
+		if (aFlag == 1)
+			m_EditPre = m_EditA + nSign;
+	}
+	else {
+		m_EditPre = Calculation2(m_EditPre, m_EditA, nSign) + _T("^2");
+		nSign = "^";
+	}
+	squareFlag = 1;
+	m_EditA = "";
+	m_Output = 0;
+	m_Output2 = 0;
+	aFlag = 0;
+	pointFlag = 0;
+	UpdateData(false);
+}
+
+
+void CScienCalDlg::OnBnClickedButtSqrt()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	UpdateData(true);
+	if (nSign == "")
+		nSign = "sqrt";
+	if (m_EditPre == "" || aFlag == 1) {
+		m_EditPre = m_EditA + nSign;
+		nSign = "sqrt";
+		if (aFlag == 1)
+			m_EditPre = m_EditA + nSign;
+	}
+	else {
+		m_EditPre = Calculation2(m_EditPre, m_EditA, nSign) + _T("sqrt");
+		nSign = "sqrt";
+	}
+	squareFlag = 1;
+	m_EditA = "";
+	m_Output = 0;
+	m_Output2 = 0;
+	aFlag = 0;
+	pointFlag = 0;
+	UpdateData(false);
 }

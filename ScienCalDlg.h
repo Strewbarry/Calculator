@@ -43,10 +43,15 @@ public:
 	afx_msg void OnBnClickedButtMulti();
 	afx_msg void OnBnClickedButtDivide();
 	afx_msg void OnBnClickedButtCalc();
-	int aFlag;
+	bool aFlag;
 	afx_msg void OnBnClickedButtDot();
 	bool pointFlag;
 	int m_Output2;
 	CString nSign;
 	CString m_EditB;
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
+	afx_msg void OnBnClickedButtPow();
+	bool squareFlag;
+	afx_msg void OnBnClickedButtSqrt();
 };
