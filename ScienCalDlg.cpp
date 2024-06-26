@@ -271,8 +271,8 @@ void CScienCalDlg::OnBnClickedButtClear()
 	pointFlag = 0;
 	aFlag = 0;
 }
-
-CString Calculation2(CString a, CString b, CString si) {
+CString CScienCalDlg::Calculation(CString a, CString b, CString si)
+{
 	double aa = _ttof(a);
 	double bb = _ttof(b);
 	double result = 0;
@@ -296,6 +296,30 @@ CString Calculation2(CString a, CString b, CString si) {
 	res.Format(_T("%.2f"), result);
 	return res;
 }
+//CString Calculation(CString a, CString b, CString si) {
+//	double aa = _ttof(a);
+//	double bb = _ttof(b);
+//	double result = 0;
+//
+//	if (si[0] == 43)
+//		result = aa + bb;
+//	else if (si[0] == 45)
+//		result = aa - bb;
+//	else if (si[0] == 42)
+//		result = aa * bb;
+//	else if (si[0] == 47)
+//		result = aa / bb;
+//	else if (si[0] == 94) {  // 94 == ^
+//		result = aa * aa;
+//	}
+//	else if (si[0] == 's') {
+//		result = sqrt(aa);
+//	}
+//
+//	CString res;
+//	res.Format(_T("%.2f"), result);
+//	return res;
+//}
 void RemoveLastChar(CString& str) {
 	int len = str.GetLength();
 	if (len > 0) {
@@ -319,7 +343,7 @@ void CScienCalDlg::OnBnClickedButtPlus()
 		m_EditPre = m_EditA + nSign;
 	}
 	else {
-		m_EditBuff = Calculation2(m_EditBuff, m_EditA, nSign);
+		m_EditBuff = Calculation(m_EditBuff, m_EditA, nSign);
 		m_EditPre = m_EditPre + m_EditA + '+';
 	}
 
@@ -351,7 +375,7 @@ void CScienCalDlg::OnBnClickedButtMinus()
 		m_EditPre = m_EditA + nSign;
 	}
 	else {
-		m_EditBuff = Calculation2(m_EditBuff, m_EditA, nSign);
+		m_EditBuff = Calculation(m_EditBuff, m_EditA, nSign);
 		m_EditPre = m_EditPre + m_EditA + '-';
 	}
 
@@ -382,7 +406,7 @@ void CScienCalDlg::OnBnClickedButtMulti()
 		m_EditPre = m_EditA + nSign;
 	}
 	else {
-		m_EditBuff = Calculation2(m_EditBuff, m_EditA, nSign);
+		m_EditBuff = Calculation(m_EditBuff, m_EditA, nSign);
 		m_EditPre = m_EditPre + m_EditA + '*';
 	}
 
@@ -417,7 +441,7 @@ void CScienCalDlg::OnBnClickedButtDivide()
 			m_EditPre = m_EditA + nSign;
 		}
 		else {
-			m_EditBuff = Calculation2(m_EditBuff, m_EditA, nSign);
+			m_EditBuff = Calculation(m_EditBuff, m_EditA, nSign);
 			m_EditPre = m_EditPre + m_EditA + '/';
 		}
 	}
@@ -442,13 +466,13 @@ void CScienCalDlg::OnBnClickedButtCalc()
 	else if (squareFlag == 1) {
 		if (aFlag == 0) {
 			m_EditB = m_EditA;
-			m_EditA = Calculation2(m_EditPre, m_EditA, nSign);
+			m_EditA = Calculation(m_EditPre, m_EditA, nSign);
 			m_EditPre = m_EditPre + '=';
 			aFlag = 1;
 		}
 		else {
 			m_EditPre = m_EditA + nSign + '=';
-			m_EditA = Calculation2(m_EditPre, m_EditA, nSign);
+			m_EditA = Calculation(m_EditPre, m_EditA, nSign);
 		}
 		m_Output = 0;
 		m_ListCtrl.AddString(m_EditPre+m_EditA);
@@ -461,12 +485,12 @@ void CScienCalDlg::OnBnClickedButtCalc()
 			if (aFlag == 0) {
 				m_EditB = m_EditA;
 				m_EditPre = m_EditPre + m_EditA + '=';
-				m_EditA = Calculation2(m_EditPre, m_EditA, nSign);
+				m_EditA = Calculation(m_EditPre, m_EditA, nSign);
 				aFlag = 1;
 			}
 			else {
 				m_EditPre = m_EditA + nSign + m_EditB + '=';
-				m_EditA = Calculation2(m_EditA, m_EditB, nSign);
+				m_EditA = Calculation(m_EditA, m_EditB, nSign);
 			}
 			m_Output = 0;
 			pointFlag = 0;
@@ -573,7 +597,7 @@ void CScienCalDlg::OnBnClickedButtPow()
 			m_EditPre = m_EditA + nSign;
 	}
 	else {
-		m_EditPre = Calculation2(m_EditPre, m_EditA, nSign) + _T("^2");
+		m_EditPre = Calculation(m_EditPre, m_EditA, nSign) + _T("^2");
 		nSign = "^";
 	}
 	squareFlag = 1;
@@ -599,7 +623,7 @@ void CScienCalDlg::OnBnClickedButtSqrt()
 			m_EditPre = m_EditA + nSign;
 	}
 	else {
-		m_EditPre = Calculation2(m_EditPre, m_EditA, nSign) + _T("sqrt");
+		m_EditPre = Calculation(m_EditPre, m_EditA, nSign) + _T("sqrt");
 		nSign = "sqrt";
 	}
 	squareFlag = 1;
@@ -634,7 +658,6 @@ void CScienCalDlg::On32771()
 	}
 }
 
-
 void CScienCalDlg::On32772()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
@@ -668,3 +691,5 @@ void CScienCalDlg::OnDblclkList1()
 	UpdateData(false);
 
 }
+
+

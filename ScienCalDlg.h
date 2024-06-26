@@ -63,4 +63,5 @@ public:
 	CString m_EditBuff;
 	afx_msg void OnBnClickedButtClearall();
 	afx_msg void OnDblclkList1();
+	CString Calculation(CString a, CString b, CString si);
 };
