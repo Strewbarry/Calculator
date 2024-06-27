@@ -75,6 +75,7 @@ BEGIN_MESSAGE_MAP(CScienCalDlg, CDialog)
 	ON_COMMAND(ID_32772, &CScienCalDlg::On32772)
 	ON_BN_CLICKED(IDC_BUTT_CLEARALL, &CScienCalDlg::OnBnClickedButtClearall)
 	ON_LBN_DBLCLK(IDC_LIST1, &CScienCalDlg::OnDblclkList1)
+	ON_BN_CLICKED(IDC_BUTTON1, &CScienCalDlg::OnBnClickedButton1)
 END_MESSAGE_MAP()
 
 
@@ -693,3 +694,10 @@ void CScienCalDlg::OnDblclkList1()
 }
 
 
+
+
+void CScienCalDlg::OnBnClickedButton1()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	OnOK();
+}

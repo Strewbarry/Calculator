@@ -499,9 +499,14 @@ BOOL CMFCApplication4Dlg::PreTranslateMessage(MSG* pMsg)
 void CMFCApplication4Dlg::On32772()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
-	dlg.Create(IDD_DIALOG_SCIENTIFIC, this);
-	dlg.ShowWindow(SW_SHOW);
-	//ShowWindow(SW_HIDE);
 
+	this->ShowWindow(SW_HIDE);
+	//dlg.ShowWindow(SW_SHOW);
+
+	if (dlg.DoModal() == IDOK)
+	{
+		this->ShowWindow(SW_SHOW);
+	}
 	//this->EndDialog(IDOK);
 }
+
